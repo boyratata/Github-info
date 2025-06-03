@@ -1,12 +1,14 @@
 :root {
   --bg-color: #121212;
-  --text-color: #ffffff; 
-  --highlight-color: #ff4d4d; 
-  --border-radius: 8px; 
-  --font-family: 'Roboto', sans-serif; 
-  --transition-speed: 0.3s; 
-  --shadow-color: rgba(0, 0, 0, 0.3);
+  --text-color: #ffffff;
+  --highlight-color: #ff4d4d;
   --blossom: #ffb7c5;
+  --card-color: #1f1f1f;
+  --border-radius: 15px;
+  --font-family: 'Roboto', sans-serif;
+  --transition-speed: 0.3s;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 15px 30px var(--shadow-color);
 }
 
 * {
@@ -17,21 +19,18 @@
 }
 
 body {
-  background-color: var(--bg-color);
+  background: var(--bg-color);
   color: var(--text-color);
-  line-height: 1.6;
   font-size: 16px;
+  line-height: 1.6;
   overflow-x: hidden;
-  transition: all var(--transition-speed) ease-in-out;
+  transition: background var(--transition-speed), color var(--transition-speed);
   -webkit-font-smoothing: antialiased;
 }
 
 #loading-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: var(--bg-color);
   display: flex;
   justify-content: center;
@@ -45,16 +44,15 @@ body {
 #loading-bar-container {
   width: 100%;
   height: 5px;
-  background-color: #333;
+  background: #333;
   position: absolute;
   top: 0;
-  left: 0;
 }
 
 #loading-bar {
-  height: 100%;
   width: 0;
-  background-color: var(--blossom);
+  height: 100%;
+  background: var(--blossom);
   animation: loadAnimation 3s linear forwards;
 }
 
@@ -62,18 +60,18 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  text-align: center;
-  color: var(--text-color);
   font-size: 1.5rem;
+  color: var(--text-color);
+  text-align: center;
 }
 
 @keyframes loadAnimation {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
 .hero {
@@ -82,46 +80,27 @@ body {
   align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
-  background: var(--blossom);
+  background: var(--blossom) url('./wallpaper/background-728x410.jpg') center/cover no-repeat;
   color: var(--bg-color);
   border-bottom: 5px solid var(--blossom);
   text-align: center;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
   animation: fadeIn 1s ease-in-out forwards;
-  background-size: cover;
-  background-position: center;
-  height: 410px; 
-}
-
-@media (min-width: 1024px) and (max-width: 1980px) {
-  .hero {
-    background-image: url('./wallpaper/background-728x410.jpg');
-    height: 410px; 
-  }
+  height: 410px;
 }
 
 @media (min-width: 1280px) {
   .hero {
     background-image: url('./wallpaper/background-728x410.jpg');
-    height: 1024px; 
-  }
-}
-
-@media (max-width: 1023px) and (min-width: 728px) {
-  .hero {
-    background-image: url('./wallpaper/background-728x410.jpg');
-    height: 410px; 
+    height: 1024px;
   }
 }
 
 @media (max-width: 727px) {
   .hero {
     background-image: url('./wallpaper/background-fong.jpg');
-    height: 410px; 
   }
 }
-
 
 .hero .profile-img {
   width: 150px;
@@ -151,36 +130,25 @@ body {
   border: 2px solid var(--blossom);
   padding: 0.6rem 1.2rem;
   border-radius: 25px;
-  transition: background-color var(--transition-speed), transform var(--transition-speed);
+  transition: all var(--transition-speed);
 }
 
 .hero a:hover {
-  background-color: var(--blossom);
+  background: var(--blossom);
   color: var(--bg-color);
   transform: scale(1.05);
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 .projects {
   padding: 4rem 2rem;
   text-align: center;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
   animation: fadeIn 1s ease-in-out forwards;
 }
 
 .projects h2 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: var(--text-color);
 }
 
 .project-grid {
@@ -191,23 +159,23 @@ body {
 }
 
 .project-card {
-  background: #1f1f1f;
+  background: var(--card-color);
   padding: 2.5rem;
-  border-radius: 15px;
+  border-radius: var(--border-radius);
   border: 1px solid var(--blossom);
   transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-  width: 100%;
   max-width: 350px;
+  width: 100%;
 }
 
 .project-card:hover {
   transform: translateY(-12px);
-  box-shadow: 0 15px 30px var(--shadow-color);
+  box-shadow: var(--shadow-elevated);
 }
 
 .project-card h3 {
-  color: var(--blossom);
   font-size: 1.5rem;
+  color: var(--blossom);
   margin-bottom: 1.2rem;
 }
 
@@ -218,17 +186,17 @@ body {
 
 .project-card a {
   display: inline-block;
+  font-size: 1.1rem;
   color: var(--text-color);
   text-decoration: none;
-  font-size: 1.1rem;
   border: 2px solid var(--blossom);
   padding: 0.6rem 1.2rem;
   border-radius: 25px;
-  transition: background-color var(--transition-speed), color var(--transition-speed);
+  transition: all var(--transition-speed);
 }
 
 .project-card a:hover {
-  background-color: var(--blossom);
+  background: var(--blossom);
   color: var(--bg-color);
 }
 
@@ -240,39 +208,20 @@ footer {
   margin-top: 5rem;
   border-top: 5px solid var(--blossom);
   opacity: 0;
-  transition: opacity 1s ease-in-out;
   animation: fadeIn 1s ease-in-out forwards;
 }
 
 footer p {
   font-size: 1.2rem;
-  color: var(--text-color);
 }
 
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .projects h2 {
-    font-size: 2rem;
-  }
-
-  .project-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-
-  .project-card {
-    padding: 1.5rem;
-  }
-
-  footer p {
-    font-size: 1rem;
-  }
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .projects h2 { font-size: 2rem; }
+  .project-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+  .project-card { padding: 1.5rem; }
+  footer p { font-size: 1rem; }
 }
 
 ::-webkit-scrollbar {
@@ -281,19 +230,15 @@ footer p {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--bg-color);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--blossom);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-
-
-
+  background: #e197a8;
+  }
