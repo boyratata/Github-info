@@ -1,47 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const loadingBar = document.getElementById('loading-bar');
-  const loadingBarContainer = document.getElementById('loading-bar-container');
-  const hero = document.querySelector('.hero');
-  const projects = document.querySelector('.projects');
-  const footer = document.querySelector('footer');
+  const $ = id => document.getElementById(id)
+  const hero = document.querySelector('.hero')
+  const projects = document.querySelector('.projects')
+  const footer = document.querySelector('footer')
+  const loadingBar = $('loading-bar')
+  const loadingBarContainer = $('loading-bar-container')
 
-  function loadProfile() {
-    fetch('https://api.github.com/users/boyratata')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('profile-avatar').src = data.avatar_url;
-        document.getElementById('profile-name').textContent = data.name || 'Jay';
-        document.getElementById('profile-bio').textContent = data.bio || 'kaboom',
-        document.getElementById('profile-link').href = data.html_url;
-      })
-      .catch(error => console.error('Error fetching GitHub profile:', error));
-  }
+  fetch('https://api.github.com/users/boyratata')
+    .then(res => res.json())
+    .then(d => {
+      $('profile-avatar').src = d.avatar_url
+      $('profile-name').textContent = d.name || 'Jay'
+      $('profile-bio').textContent = d.bio || 'kaboom'
+      $('profile-link').href = d.html_url
+    })
+    .catch(console.error)
 
-  function showContent() {
-    hero.style.display = 'block';
-    projects.style.display = 'block';
-    footer.style.display = 'block';
-    loadingBarContainer.style.display = 'none';
-
-    hero.classList.add('fade-in');
-    projects.classList.add('fade-in');
-    footer.classList.add('fade-in');
-  }
-
-  function updateLoadingBar() {
-    let width = 0;
-    const interval = setInterval(() => {
-      width += 10;
-      loadingBar.style.width = `${width}%`;
-      if (width >= 100) {
-        clearInterval(interval);
-        setTimeout(() => {
-          showContent();
-        }, 200);
-      }
-    }, 100);
-  }
-
-  loadProfile();
-  updateLoadingBar();
-});
+  let width = 0
+  const int = setInterval(() => {
+    loadingBar.style.width = `${width += 10}%`
+    if (width >= 100) {
+      clearInterval(int)
+      setTimeout(() => {
+        [hero, projects, footer].forEach(e => {
+          e.style.display = 'block'
+          e.classList.add('fade-in')
+        })
+        loadingBarContainer.style.display = 'none'
+      }, 200)
+    }
+  }, 100)
+})
